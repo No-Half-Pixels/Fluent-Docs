@@ -1,0 +1,334 @@
+<?php
+/**
+ * Fluent Docs Options class.fluent-docs-options.php.
+ *
+ * The job of this class is to create the documentation options page.
+ *
+ * @package Fluent Docs
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+/**
+ * Fluent_Docs_Options
+ */
+class Fluent_Docs_Options extends Fluent_Docs_Base{
+
+	/**
+   * @var string $version Class version.
+   */
+  public $version = '1.0.0';
+
+  /**
+   * @var object $page stores the options page.
+   */
+  public $page = null;
+
+  /**
+    * Class constructor, creates options page
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function __construct(){
+  		$this->page = new Fluent_Options_Page(
+  			array(
+  				'option_name' => 'fluent_docs',
+  				'page_args' => array(
+  					'title' => __('Documentation Options', $this->domain),
+  					'menu_title' => __('Options', $this->domain),
+  					'parent' => 'edit.php?post_type=documentation'
+  				),
+  			),
+  			array(
+  				'pdf-options' => array(
+  					'title' => __('PDF/Print Options', $this->domain),
+  					'dash_icon' => 'media-text',
+  					'description' => __('Please select the options for PDF/Print generation.', $this->domain),
+  					'fields' => array(
+  						'author' => array(
+				            'type' => 'text',//the field type
+				            'title' => __('Document Author', $this->domain),
+				            'required' => true,
+				            'description' => __('This is usually your company name, but it can be anything you want.', $this->domain)
+				        ),
+				        'cover-image' => array(
+				            'type' => 'media',//the field type
+				            'title' => __('Document Cover Image', $this->domain),
+				            'description' => __('Select a logo or cover image to use during print and pdf viewing of the documentation.<br/>The image can be any size and it is centered.', $this->domain)
+				        ),
+				    ),
+				),
+  				'contents-styling' => array(
+  					'title' => __('Table Of Contents Custom Styling', $this->domain),
+  					'dash_icon' => 'editor-kitchensink',
+  					'description' => __('Please select what style options you would like to add to the table of contents. These options apply to normal and print view pages, but pdf view.', $this->domain),
+  					'fields' => array(
+  						'contents-font' => array(
+				            'type' => 'group',//the field type
+				            'title' => __('Contents Section Links', $this->domain),//field title
+				            'fields' => array(
+				            	'size' => array(
+						            'type' => 'number',
+						            'title' => __('Font Size (px)', $this->domain),
+						            'default' => '14',       
+						        ),
+				            	'weight' => array(
+						            'type' => 'select',
+						            'title' => __('Font Weight', $this->domain),
+						            'default' => 'normal',
+						            'options' => array(
+						            	'normal' => __('Normal', $this->domain),
+						            	'bold' => __('Bold', $this->domain)
+						            ),       
+						        ),
+						        'border-radius' => array(
+						            'type' => 'number',
+						            'title' => __('Border Radius (px)', $this->domain),
+						            'default' => '0',       
+						        ),
+				            )
+				        ),
+	  					'contents-color' => array(
+				            'type' => 'group',//the field type
+				            'title' => __('Contents Section Link Colors', $this->domain),//field title
+				            'fields' => array(
+				            	'normal' => array(
+						            'type' => 'color',
+						            'title' => __('Color', $this->domain),
+						            'default' => '#333',          
+						        ),
+						        'hover' => array(
+						            'type' => 'color',
+						            'title' => __('Hover/Active', $this->domain),
+						            'default' => '#fff',          
+						        ),
+						        'bg' => array(
+						            'type' => 'color',
+						            'title' => __('Background', $this->domain),
+						            'default' => '#f3f3f3',          
+						        ),
+						        'bg-hover' => array(
+						            'type' => 'color',
+						            'title' => __('Background Hover/Active', $this->domain),
+						            'default' => '#333',          
+						        )
+				            )
+				        ),
+						'contents-padding' => array(
+				            'type' => 'group',
+				            'title' => __('Contents Section Link Padding', $this->domain),
+				            'fields' => array(
+				            	'top' => array(
+						            'type' => 'number',
+						            'title' => __('Top (px)', $this->domain),
+						            'default' => '4',          
+						        ),
+						        'right' => array(
+						            'type' => 'number',
+						            'title' => __('Right (px)', $this->domain),
+						            'default' => '8',          
+						        ),
+						        'bottom' => array(
+						            'type' => 'number',
+						            'title' => __('Bottom (px)', $this->domain),
+						            'default' => '4',          
+						        ),
+						        'left' => array(
+						            'type' => 'number',
+						            'title' => __('Left (px)', $this->domain),
+						            'default' => '8',          
+						        )
+				            )
+				        ),
+				        'contents-article-color' => array(
+				            'type' => 'group',//the field type
+				            'title' => __('Contents Article Link Colors', $this->domain),//field title
+				            'fields' => array(
+				            	'normal' => array(
+						            'type' => 'color',
+						            'title' => __('Color', $this->domain),
+						            'default' => '#333',          
+						        ),
+						        'hover' => array(
+						            'type' => 'color',
+						            'title' => __('Hover/Active', $this->domain),
+						            'default' => '#fff',          
+						        ),
+						        'bg' => array(
+						            'type' => 'color',
+						            'title' => __('Background', $this->domain),
+						            'default' => '#f9f9f9',          
+						        ),
+						        'bg-hover' => array(
+						            'type' => 'color',
+						            'title' => __('Background Hover/Active', $this->domain),
+						            'default' => '#333',          
+						        )
+				            )
+				        ),
+						'contents-article-padding' => array(
+				            'type' => 'group',
+				            'title' => __('Contents Article Link Padding', $this->domain),
+				            'fields' => array(
+				            	'top' => array(
+						            'type' => 'number',
+						            'title' => __('Top (px)', $this->domain),
+						            'default' => '4',          
+						        ),
+						        'right' => array(
+						            'type' => 'number',
+						            'title' => __('Right (px)', $this->domain),
+						            'default' => '4',          
+						        ),
+						        'bottom' => array(
+						            'type' => 'number',
+						            'title' => __('Bottom (px)', $this->domain),
+						            'default' => '4',          
+						        ),
+						        'left' => array(
+						            'type' => 'number',
+						            'title' => __('Left (px)', $this->domain),
+						            'default' => '16',          
+						        )
+				            )
+				        ),
+  					),
+  				),
+				'main-styling' => array(
+  					'title' => __('Content Custom Styling', $this->domain),
+  					'dash_icon' => 'editor-kitchensink',
+  					'description' => __('Please choose the styling options for the documentation content. These options apply to normal and print view pages, but pdf view.', $this->domain),
+  					'fields' => array(
+	  					'section-header' => array(
+				            'type' => 'group',//the field type
+				            'title' => __('Section Title', $this->domain),//field title
+				            'fields' => array(
+				            	'color' => array(
+						            'type' => 'color',
+						            'title' => __('Color', $this->domain),
+						            'default' => '#333',          
+						        ),
+						        'link-color' => array(
+						            'type' => 'color',
+						            'title' => __('Index Color', $this->domain),
+						            'default' => '#ccc',          
+						        ),
+						        'size' => array(
+						            'type' => 'number',
+						            'title' => __('Font Size (px)', $this->domain),
+						            'default' => '30',          
+						        ),
+						        'weight' => array(
+						            'type' => 'select',
+						            'title' => __('Font Weight', $this->domain),
+						            'default' => 'bold',
+						            'options' => array(
+						            	'normal' => __('Normal', $this->domain),
+						            	'bold' => __('Bold', $this->domain)
+						            ),  
+						        )
+				            )
+				        ),
+						'article-header' => array(
+				            'type' => 'group',
+				            'title' => __('Article Title', $this->domain),
+				            'fields' => array(
+				            	'color' => array(
+						            'type' => 'color',
+						            'title' => __('Color', $this->domain),
+						            'default' => '#333',          
+						        ),
+						        'link-color' => array(
+						            'type' => 'color',
+						            'title' => __('Index Color', $this->domain),
+						            'default' => '#ccc',          
+						        ),
+						        'size' => array(
+						            'type' => 'number',
+						            'title' => __('Font Size (px)', $this->domain),
+						            'default' => '24',          
+						        ),
+						        'weight' => array(
+						            'type' => 'select',
+						            'title' => __('Font Weight', $this->domain),
+						            'default' => 'bold',
+						            'options' => array(
+						            	'normal' => __('Normal', $this->domain),
+						            	'bold' => __('Bold', $this->domain)
+						            ),  
+						        )
+				            )
+				        ),
+						'font' => array(
+				            'type' => 'group',//the field type
+				            'title' => __('Article Font', $this->domain),//field title
+				            'fields' => array(
+				            	'size' => array(
+						            'type' => 'number',
+						            'title' => __('Font Size (px)', $this->domain),
+						            'default' => '14',       
+						        ),
+						        'color' => array(
+						            'type' => 'color',
+						            'title' => __('Font Color', $this->domain),
+						            'default' => '#333',       
+						        ),
+						        'like-size' => array(
+						            'type' => 'number',
+						            'title' => __('Like Font Size (px)', $this->domain),
+						            'default' => '12',       
+						        ),
+						        'like-color' => array(
+						            'type' => 'color',
+						            'title' => __('Like Text Color', $this->domain),
+						            'default' => '#ccc',       
+						        ),
+				            )
+				        ),
+				        'like-color' => array(
+				            'type' => 'group',//the field type
+				            'title' => __('Like Button Colors', $this->domain),//field title
+				            'fields' => array(
+				            	'like' => array(
+						            'type' => 'color',
+						            'title' => __('Like', $this->domain),
+						            'default' => '#5cb85c',          
+						        ),
+						        'like-hover' => array(
+						            'type' => 'color',
+						            'title' => __('Like Hover/Active', $this->domain),
+						            'default' => '#449d44',          
+						        ),
+						        'dislike' => array(
+						            'type' => 'color',
+						            'title' => __('Dislike', $this->domain),
+						            'default' => '#d9534f',          
+						        ),
+						        'dislike-hover' => array(
+						            'type' => 'color',
+						            'title' => __('Dislike Hover/Active', $this->domain),
+						            'default' => '#c9302c',          
+						        )
+				            )
+				        ),
+  					),
+  				),
+				'custom-styling' => array(
+  					'title' => __('Custom Css', $this->domain),
+  					'dash_icon' => 'admin-appearance',
+  					'description' => __('Please add any custom Css rules you would like loaded on the documentation page.', $this->domain),
+  					'fields' => array(
+  						'css' => array(
+				            'type' => 'textarea',
+				            'title' => __('Custom Css', $this->domain),
+				            'description' => __('Enter any custom Css you want to add to the documentation.<br/>Please view the page source to view available classes and ids', $this->domain)
+				        ),
+  					),
+  				),
+  			)
+  		);
+  }
+}

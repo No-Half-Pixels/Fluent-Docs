@@ -1,0 +1,276 @@
+<?php
+/**
+ * Fluent Docs Post Type class.fluent-docs-post-type.php.
+ *
+ * The job of this class is to create the docs post type.
+ *
+ * @package Fluent Docs
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+/**
+ * Fluent_Docs_Post_type
+ */
+class Fluent_Docs_Post_Type extends Fluent_Docs_Base{
+
+	/**
+   * @var string $version Class version.
+   */
+  public $version = '1.0.0';
+
+  /**
+   * @var object $post_type The Fluent Framework Post Type object
+   */
+  public $post_type = null;
+
+  /**
+   * @var string $metaboxes_sections - contains all of the sections for the demo metaboxes
+   */
+  private $metaboxes_sections = array();
+
+  /**
+   * @var string $metaboxes_args - contains all of the arguments for the demo metaboxes
+   */
+  private $metaboxes_args = array();
+
+  /**
+   * @var object $metaboxes The Fluent Framework Metabox object
+   */
+  public $metaboxes = null;
+
+  /**
+    * Function loaded on class creation
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+	function __construct(){
+    //register demo post type
+    $this->post_type = new Fluent_Post_type('Documentation', array(
+        'labels'               => array(
+          'name'               => __('Documentation', $this->domain),
+          'singular_name'      => __('Documentation', $this->domain),
+          'menu_name'          => __('Documentation', $this->domain),
+          'name_admin_bar'     => __('Documentation', $this->domain),
+          'add_new'            => __( 'Add New', 'domain' ),
+          'add_new_item'       => __('Add New Documentation', $this->domain),
+          'new_item'           => __('New Documentation', $this->domain),
+          'edit_item'          => __('Edit Documentation', $this->domain),
+          'view_item'          => __('View Documentation', $this->domain),
+          'all_items'          => __('All Documentation', $this->domain),
+          'search_items'       => __('Search Documentation', $this->domain),
+          'parent_item_colon'  => __('Parent Documentation:', $this->domain),
+          'not_found'          => __('No Documentation found', $this->domain),
+          'not_found_in_trash' => __('No Documentation found in trash', $this->domain)
+      ),
+      'public' => true,
+      'description' => __('Fluent Documentation', $this->domain),
+      'show_ui' => true,
+      //'show_in_nav_menus' => true,
+      'menu_icon' => 'dashicons-book',
+      'supports' => array('title','editor','page-attributes'),
+      'hierarchical' => true,
+      'messages' => array(
+      ),
+      'templates' => array(
+        'single' => array(//the single post page
+            'override' => false,//default = false. set to true to force this to be used before the theme version
+            'path' => dirname(FLUENT_DOCS_FILE) . '/assets/templates/single-documentation.php'//full path to file, default = false
+        )
+      ),
+    ));
+    
+    //only allow 3 levels
+    add_action('page_attributes_dropdown_pages_args', $this->provide('parent_dropdown'), 10, 2);
+
+    //alter title based on parent dropdown selection
+    add_action( 'admin_print_scripts-post-new.php', $this->provide('alter_admin_title'), 11 );
+    add_action( 'admin_print_scripts-post.php', $this->provide('alter_admin_title'), 11 );
+
+    //add view print/pdf buttons to page on save
+    add_filter('get_sample_permalink_html', $this->provide('admin_view_buttons'), 10, 4);
+    //add to post row actions - future update
+    //add_action( 'post_row_actions', $this->provide('admin_view_links'), 10, 2 );
+
+    //force all requests to sections and articles to the root parent
+    add_action('template_redirect', $this->provide('force_top_level_parent'));
+
+    //add shortcode to documentation page
+    add_filter('the_content', $this->provide('add_shortcode'));
+
+    //register demo post type metaboxes
+    $this->setup_metaboxes_sections();
+    $this->setup_metaboxes_args();
+    $this->metaboxes = new Fluent_Options_Meta( $this->metaboxes_args, $this->metaboxes_sections);
+	}
+
+  /**
+    * Sets up the metabox sections for docs
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  private function setup_metaboxes_sections(){
+    $this->metaboxes_sections['article-settings'] = array(
+      'dash_icon' => 'book',
+        'title' =>  __('Article Details', $this->domain),
+        'description' => __('', $this->domain),
+        'context' => 'normal',
+        'priority' => 'high',
+        'fields' => array(
+            'enable_likes' => array(
+                'type' => 'radio',
+                'title' => __('Enable Likes', $this->domain),
+                'default' => 'yes',
+                'options' => array(
+                  'yes' => __('Yes', $this->domain),
+                  'no' => __('No', $this->domain)
+                ),
+            ),
+            'like' => array(
+                'type' => 'number',
+                'title' => __('Likes', $this->domain),
+                'sub_title' => __('', $this->domain),
+                'description' => __('', $this->domain),
+                'default' => 0
+            ),
+            'dislike' => array(
+                'type' => 'number',
+                'title' => __('Dislikes', $this->domain),
+                'sub_title' => __('', $this->domain),
+                'description' => __('', $this->domain),
+                'default' => 0
+            ),
+        ),
+    );
+
+  }
+
+  /**
+  * Sets up the metabox args for docs
+  *
+  * @since 1.0.0
+  *
+  * @return none
+  *
+  */
+  private function setup_metaboxes_args(){
+    $this->metaboxes_args = array(
+      'option_name' => 'fluent_documentation_meta',
+      'post_types' => array(
+        'documentation'
+      )
+    );
+  }
+
+  /**
+    * Prevent articles being added as parents, we operate 2 levels deep.
+    *
+    * @since 1.0.0
+    *
+    * @return array $atributes
+    *
+    */
+  public function parent_dropdown($attributes, $post){
+    $attributes['depth'] = 2;
+    return $attributes;
+  }
+
+  /**
+    * load js to change the "edit" title on posts from documentation to section or article depending on the parent value.
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function alter_admin_title(){
+    global $post_type;
+    if($post_type != 'documentation'){
+      return;
+    }
+    wp_enqueue_script( 'documentation-admin-script-post', FLUENT_DOCS_URL . '/assets/js/admin-script-post.min.js', array('jquery'), $this->version, true );
+    $messages = array(
+      'context' => __('Edit', $this->domain),
+      'documentation' => __('Documentation', $this->domain),
+      'section' => __('Section', $this->domain),
+      'article' => __('Article', $this->domain)
+    );
+    if(current_filter() == 'admin_print_scripts-post-new.php'){
+      $messages['context'] = __('Add New', $this->domain);
+    }
+    wp_localize_script('documentation-admin-script-post', 'fluentdocspost', $messages);
+  }
+
+
+  public function admin_view_buttons($return, $id, $new_title, $new_slug){
+    $post = get_post( $id );
+    if ( ! $post || get_post_type($id) != 'documentation'){return $return;}
+    $parents = get_post_ancestors( $id ); 
+    $doc_id = ($parents) ? $parents[count($parents)-1]: $id;
+    $return .= "<span id='view-pdf-btn'><a target='_blank' href='" . wp_nonce_url(add_query_arg(array('media' => 'pdf'), get_permalink( $doc_id )), 'documentation-actions') . "' class='button button-small'>".__('View PDF')."</a></span>\n";
+    $return .= "<span id='view-print-btn'><a target='_blank' href='" . wp_nonce_url(add_query_arg(array('media' => 'print'), get_permalink( $doc_id )), 'documentation-actions') . "' class='button button-small'>".__('View Print')."</a></span>\n";
+    return $return;
+  }
+
+  public function admin_view_links($actions, $post){
+    print_r($post);
+    if ( 'documentation' != $post->post_type){
+      return $actions;
+    }
+    $parents = get_post_ancestors( $post->ID ); 
+    $doc_id = ($parents) ? $parents[count($parents)-1]: $post->ID;
+    $actions['view_pdf'] = "<span id='view-pdf-btn'><a target='_blank' href='" . wp_nonce_url(add_query_arg(array('media' => 'pdf'), get_permalink( $doc_id )), 'documentation-actions') . "' class='editinline'>".__('View PDF')."</a></span>\n";
+    $actions['view_print'] = "<span id='view-print-btn'><a target='_blank' href='" . wp_nonce_url(add_query_arg(array('media' => 'print'), get_permalink( $doc_id )), 'documentation-actions') . "' class='editinline'>".__('View Print')."</a></span>\n";
+    return $actions;
+  }
+
+  /**
+    * prevent sections are articles being viewed globally.
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function force_top_level_parent(){
+    global $post;
+    if(!is_object($post) || !is_single($post->ID)){
+      return;
+    }
+    if(get_post_type($post->id) != 'documentation' || $post->post_parent == 0){
+      return;
+    }
+    $parents = get_post_ancestors( $post->ID ); 
+    $id = ($parents) ? $parents[count($parents)-1]: $post->ID;
+    if(count($parents) == 1){
+      $string = 'section';
+    }else{
+      $string = 'article';
+    }
+    wp_redirect(get_permalink($id).'#'.$string.'-'.$post->ID);
+    exit();
+  }
+
+  /**
+    * Add shortcode to content on documentation page to prevent the need to do it as you would on custom pages.
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function add_shortcode($content = ''){
+    global $post;
+    if(get_post_type() != 'documentation' || $post->post_parent != 0){
+      return $content;
+    }
+    return $content.'[documentation]';
+  }
+
+}

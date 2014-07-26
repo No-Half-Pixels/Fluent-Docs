@@ -1,0 +1,108 @@
+<?php
+/**
+ * Fluent Docs Likes class.fluent-docs-likes.php.
+ *
+ * Adds like functionality to artciles.
+ *
+ * @package Fluent Docs
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+/**
+ * Fluent_Docs_Likes
+ */
+class Fluent_Docs_Likes extends Fluent_Docs_Base{
+
+	/**
+   * @var string $version Class version.
+   */
+  public $version = '1.0.0';
+
+  /**
+    * Add actions and filters for like functionality
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function __construct(){
+  	add_filter('the_content', $this->provide('add_likes'));
+
+  	add_action('wp_ajax_documentation-like', $this->provide('like_article'));
+  	add_action('wp_ajax_nopriv_documentation-like', $this->provide('like_article'));
+
+  	add_action('wp_ajax_documentation-dislike', $this->provide('dislike_article'));
+  	add_action('wp_ajax_nopriv_documentation-dislike', $this->provide('dislike_article'));
+  }
+
+  /**
+    * Add likes markup to content if ok.
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function add_likes($content = ''){
+    global $post;
+    $parents = get_post_ancestors( $post->ID );
+    if(get_post_type() != 'documentation' || count($parents) < 2){
+      return $content;
+    }
+    $meta = get_post_meta($post->ID, 'fluent_documentation_meta', true);
+    if(!isset($meta['enable_likes']) || $meta['enable_likes'] == 'no'){
+      return $content;
+    }
+    $content .= '<div class="documentation-likes"'.((isset($_GET['media']) && $_GET['media'] == 'pdf') ? ' style="display: none;"' : '').'><p>'.__('Was this helpful?', $this->domain).' <a class="like" href="'.wp_nonce_url(add_query_arg(array('action' => 'documentation-like', 'id' => $post->ID), admin_url('admin-ajax.php')), 'documentation-update-likes').'" title="'.__('Yes', $this->domain).'"><span class="dashicons dashicons-yes"></span></a><a class="dislike" href="'.wp_nonce_url(add_query_arg(array('action' => 'documentation-dislike', 'id' => $post->ID), admin_url('admin-ajax.php')), 'documentation-update-likes').'" title="'.__('No', $this->domain).'"><span class="dashicons dashicons-no-alt"></span></a> <span class="response good">'.__('Thank you for your feedback, it\'s always welcome.').'</span><span class="response bad">'.__('Thank you for your feedback, we will consider improving this content.').'</span></p></div>';
+    return $content;
+  }
+
+  /**
+    * Ajax like callback
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function like_article(){
+  	if(!wp_verify_nonce($_REQUEST['_wpnonce'], 'documentation-update-likes') || !isset($_REQUEST['id'])){
+  		die(__('Nonce verification failed!', $this->domain));
+  	}
+  	$meta = get_post_meta($_REQUEST['id'], 'fluent_documentation_meta', true);
+  	if(!$meta){
+  		$meta = array(
+  			'like' => 0
+  		);
+  	}
+  	$meta['like']++;
+  	update_post_meta($_REQUEST['id'], 'fluent_documentation_meta', $meta);
+  	die('1');
+  }
+
+  /**
+    * Ajax dislike callback
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function dislike_article(){
+  	if(!wp_verify_nonce($_REQUEST['_wpnonce'], 'documentation-update-likes') || !isset($_REQUEST['id'])){
+  		die(__('Nonce verification failed!', $this->domain));
+  	}
+  	$meta = get_post_meta($_REQUEST['id'], 'fluent_documentation_meta', true);
+  	if(!$meta){
+  		$meta = array(
+  			'dislike' => 0
+  		);
+  	}
+  	$meta['dislike']++;
+  	update_post_meta($_REQUEST['id'], 'fluent_documentation_meta', $meta);
+  	die('2');
+  }
+
+}

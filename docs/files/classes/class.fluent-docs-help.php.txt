@@ -1,0 +1,57 @@
+<?php
+/**
+ * Fluent Docs Help class.fluent-docs-help.php.
+ *
+ * The job of this class is to add help where its needed
+ *
+ * @package Fluent Docs
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+/**
+ * Fluent_Docs_Help
+ */
+class Fluent_Docs_Help extends Fluent_Docs_Base{
+
+	/**
+   * @var string $version Class version.
+   */
+  public $version = '1.0.0';
+
+  /**
+    * Add shortcodes and register assets
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function __construct(){
+    add_action('admin_head', $this->provide('help_tabs'));
+  }
+
+  public function help_tabs(){
+    global $post_ID;
+    $screen = get_current_screen();
+
+    if( isset($_GET['post_type']) ) $post_type = $_GET['post_type'];
+    else $post_type = get_post_type( $post_ID );
+
+    if( $post_type == 'documentation' ) :
+
+      $screen->add_help_tab( array(
+      'id' => 'documentation_structure',
+      'title' => __('Documentation Structure', $this->domain),
+      'content' => '<h3>'.__('Documentation Structure', $this->domain).'</h3><p>'.__('The Documentation structure is very simple and doesnt require you to interlink post types or anything so complex.', $this->domain).'</p><p>'.__('It is a tiered system which goes 3 levels deep.', $this->domain).'</p><ul><li><strong>'.__('Level 0', $this->domain).'</strong> '.__('This is your top level documentation page that has no parent. This is the page and url that all sub levels will be redirect to for viewing the documentation.', $this->domain).'</li><li><strong>'.__('Level 1', $this->domain).'</strong> '.__('This level is reffered to as a "section". Sections are used to divide the documentation up into smaller chunks for easier navigation', $this->domain).'</li><li><strong>'.__('Level 2', $this->domain).'</strong> '.__('This level is reffered to as an "article". Articles are where you would document your product.', $this->domain).'</li></ul><p>'.__('You should use the post editor to add content for each of these levels.', $this->domain).'</p>',
+      ));
+
+      $screen->add_help_tab( array(
+      'id' => 'documentation_content',
+      'title' => __('Documentation Content', $this->domain),
+      'content' => '<h3>'.__('Documentation Content', $this->domain).'</h3><p>'.__('Be aware that not all browser based content wil display properly when viewing he printable or pdf versions of the documentation. To help provide some flexibility here we have provided two shortcodes that allow you to show/hide content depending on which way the documentation is viewed.').'</p><p>'.__('You can use the <code>[documentation_online][/documentation_online]</code> shortcode to display content only to viewers of the documentation through the browser, and you can use the shortcode <code>[documentation_offline][/documentation_offline]</code> to show content only to print and pdf view visitors.').'</p><p>'.__('The pdf generation is quite flexible and can handle alot of complex html content, but its always best to add your content and then check how it gets displayed in print and pdf view once saved.', $this->domain).'</p>',
+      ));
+
+    endif;
+  }
+}

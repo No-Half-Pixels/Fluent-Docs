@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                    </ul>
+                    </li>
+                    <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">3450</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">3</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-207059737"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-207059737" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Fluent_Checkbox_Field.html">Fluent_Checkbox_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Select_Field.html">Fluent_Select_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Search_Field.html">Fluent_Search_Field</a></li>
+                                                    <li class="class"><a href="../classes/PDFBarcode.html">PDFBarcode</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Textarea_Field.html">Fluent_Textarea_Field</a></li>
+                                                    <li class="class"><a href="../classes/form.html">form</a></li>
+                                                    <li class="class"><a href="../classes/CGIFLZW.html">CGIFLZW</a></li>
+                                                    <li class="class"><a href="../classes/CGIFCOLORTABLE.html">CGIFCOLORTABLE</a></li>
+                                                    <li class="class"><a href="../classes/CGIFFILEHEADER.html">CGIFFILEHEADER</a></li>
+                                                    <li class="class"><a href="../classes/CGIFIMAGEHEADER.html">CGIFIMAGEHEADER</a></li>
+                                                    <li class="class"><a href="../classes/CGIFIMAGE.html">CGIFIMAGE</a></li>
+                                                    <li class="class"><a href="../classes/CGIF.html">CGIF</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Font_Field.html">Fluent_Font_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Email_Field.html">Fluent_Email_Field</a></li>
+                                                    <li class="class"><a href="../classes/GruntMakePOT.html">GruntMakePOT</a></li>
+                                                    <li class="class"><a href="../classes/bmp.html">bmp</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Post_Type.html">Fluent_Post_Type</a></li>
+                                                    <li class="class"><a href="../classes/directw.html">directw</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Docs_Print_View.html">Fluent_Docs_Print_View</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Text_Field.html">Fluent_Text_Field</a></li>
+                                                    <li class="class"><a href="../classes/wmf.html">wmf</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Page.html">Fluent_Page</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Base.html">Fluent_Base</a></li>
+                                                    <li class="class"><a href="../classes/TTFontFile.html">TTFontFile</a></li>
+                                                    <li class="class"><a href="../classes/pdf_parser.html">pdf_parser</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Options_Meta.html">Fluent_Options_Meta</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Gallery_Field.html">Fluent_Gallery_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Import_Field.html">Fluent_Import_Field</a></li>
+                                                    <li class="class"><a href="../classes/tocontents.html">tocontents</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Options_Taxonomy.html">Fluent_Options_Taxonomy</a></li>
+                                                    <li class="class"><a href="../classes/FilterLZW.html">FilterLZW</a></li>
+                                                    <li class="class"><a href="../classes/mPDF.html">mPDF</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Number_Field.html">Fluent_Number_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Taxonomy.html">Fluent_Taxonomy</a></li>
+                                                    <li class="class"><a href="../classes/POMO_Reader.html">POMO_Reader</a></li>
+                                                    <li class="class"><a href="../classes/POMO_FileReader.html">POMO_FileReader</a></li>
+                                                    <li class="class"><a href="../classes/POMO_StringReader.html">POMO_StringReader</a></li>
+                                                    <li class="class"><a href="../classes/POMO_CachedFileReader.html">POMO_CachedFileReader</a></li>
+                                                    <li class="class"><a href="../classes/POMO_CachedIntFileReader.html">POMO_CachedIntFileReader</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Docs_Options.html">Fluent_Docs_Options</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Password_Field.html">Fluent_Password_Field</a></li>
+                                                    <li class="class"><a href="../classes/SVG.html">SVG</a></li>
+                                                    <li class="class"><a href="../classes/PO.html">PO</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Color_Field.html">Fluent_Color_Field</a></li>
+                                                    <li class="class"><a href="../classes/Translation_Entry.html">Translation_Entry</a></li>
+                                                    <li class="class"><a href="../classes/meter.html">meter</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Options_Page.html">Fluent_Options_Page</a></li>
+                                                    <li class="class"><a href="../classes/PotExtMeta.html">PotExtMeta</a></li>
+                                                    <li class="class"><a href="../classes/pdf_context.html">pdf_context</a></li>
+                                                    <li class="class"><a href="../classes/fpdi_pdf_parser.html">fpdi_pdf_parser</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Docs_Base.html">Fluent_Docs_Base</a></li>
+                                                    <li class="class"><a href="../classes/NotGettexted.html">NotGettexted</a></li>
+                                                    <li class="class"><a href="../classes/grad.html">grad</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Radio_Img_Field.html">Fluent_Radio_Img_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Docs_Post_Type.html">Fluent_Docs_Post_Type</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Export_Field.html">Fluent_Export_Field</a></li>
+                                                    <li class="class"><a href="../classes/AddTextdomain.html">AddTextdomain</a></li>
+                                                    <li class="class"><a href="../classes/A.html">A</a></li>
+                                                    <li class="class"><a href="../classes/TTFontFile_Analysis.html">TTFontFile_Analysis</a></li>
+                                                    <li class="class"><a href="../classes/FilterASCII85.html">FilterASCII85</a></li>
+                                                    <li class="class"><a href="../classes/cssmgr.html">cssmgr</a></li>
+                                                    <li class="class"><a href="../classes/MO.html">MO</a></li>
+                                                    <li class="class"><a href="../classes/indic.html">indic</a></li>
+                                                    <li class="class"><a href="../classes/StringExtractor.html">StringExtractor</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Docs_Shortcodes.html">Fluent_Docs_Shortcodes</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Options.html">Fluent_Options</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Docs_Help.html">Fluent_Docs_Help</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Date_Field.html">Fluent_Date_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Options_User.html">Fluent_Options_User</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Radio_Field.html">Fluent_Radio_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Custom_Field.html">Fluent_Custom_Field</a></li>
+                                                    <li class="class"><a href="../classes/MakePOT.html">MakePOT</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Switch_Field.html">Fluent_Switch_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Group_Field.html">Fluent_Group_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Media_Field.html">Fluent_Media_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Editor_Field.html">Fluent_Editor_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Docs_Likes.html">Fluent_Docs_Likes</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Url_Field.html">Fluent_Url_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Info_Field.html">Fluent_Info_Field</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Field.html">Fluent_Field</a></li>
+                                                    <li class="class"><a href="../classes/Translations.html">Translations</a></li>
+                                                    <li class="class"><a href="../classes/Gettext_Translations.html">Gettext_Translations</a></li>
+                                                    <li class="class"><a href="../classes/NOOP_Translations.html">NOOP_Translations</a></li>
+                                                    <li class="class"><a href="../classes/Fluent_Options_Media.html">Fluent_Options_Media</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/default.html">\</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\</small>POMO_StringReader</h1>
+                    <p><em>Provides file-like methods for manipulating a string instead
+of a physical file.</em></p>
+                    
+
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/POMO_StringReader.html#method_POMO_StringReader" class="">POMO_StringReader()</a><br />
+                                                                    <a href="../classes/POMO_StringReader.html#method_read" class="">read()</a><br />
+                                                                    <a href="../classes/POMO_StringReader.html#method_seekto" class="">seekto()</a><br />
+                                                                    <a href="../classes/POMO_StringReader.html#method_length" class="">length()</a><br />
+                                                                    <a href="../classes/POMO_StringReader.html#method_read_all" class="">read_all()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_POMO_Reader" class="">POMO_Reader()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_setEndian" class="">setEndian()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_readint32" class="">readint32()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_readint32array" class="">readint32array()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_substr" class="">substr()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_strlen" class="">strlen()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_str_split" class="">str_split()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_pos" class="">pos()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_is_resource" class="">is_resource()</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#method_close" class="">close()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/POMO_StringReader.html#property__str" class="">$_str</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#property_endian" class="">$endian</a><br />
+                                                                    <a href="../classes/POMO_Reader.html#property__post" class="">$_post</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/node_modules.grunt-wp-i18n.vendor.wp-i18n-tools.pomo.streams.php.html"><div class="path-wrapper">node_modules/grunt-wp-i18n/vendor/wp-i18n-tools/pomo/streams.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">\pomo</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/POMO_Reader.html">\POMO_Reader</a></div>
+                                                                                                    <div class="namespace-wrapper">\POMO_StringReader</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                todo
+                            </th>
+                            <td>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__str" name="property__str" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$_str</h3>
+                <pre class="signature">$_str</pre>
+                <p><em></em></p>
+                
+
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_endian" name="property_endian" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$endian</h3>
+                <pre class="signature">$endian</pre>
+                <p><em></em></p>
+                
+
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__post" name="property__post" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$_post</h3>
+                <pre class="signature">$_post</pre>
+                <p><em></em></p>
+                
+
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_POMO_StringReader" name="method_POMO_StringReader" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">POMO_StringReader()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">POMO_StringReader( <span class="argument">$str</span>)</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$str</td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_read" name="method_read" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">read()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">read( <span class="argument">$bytes</span>)</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$bytes</td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_seekto" name="method_seekto" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">seekto()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">seekto( <span class="argument">$pos</span>)</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$pos</td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_length" name="method_length" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">length()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">length()</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_read_all" name="method_read_all" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">read_all()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">read_all()</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_POMO_Reader" name="method_POMO_Reader" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">POMO_Reader()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">POMO_Reader()</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setEndian" name="method_setEndian" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setEndian()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setEndian(mixed <span class="argument">$endian</span>)</pre>
+                <p><em>Sets the endianness of the file.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$endian</td>
+                                <td><p>string 'big' or 'little'</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_readint32" name="method_readint32" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">readint32()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">readint32() : mixed</pre>
+                <p><em>Reads a 32bit Integer from the Stream</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>The integer, corresponding to the next 32 bits from</p>
+<pre><code>the stream of false if there are not enough bytes or on error</code></pre>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_readint32array" name="method_readint32array" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">readint32array()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">readint32array( <span class="argument">$count</span>) : mixed</pre>
+                <p><em>Reads an array of 32-bit Integers from the Stream</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$count</td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>Array of integers or false if there isn't</p>
+<pre><code>enough data or on error</code></pre>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_substr" name="method_substr" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">substr()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">substr( <span class="argument">$string</span>,  <span class="argument">$start</span>,  <span class="argument">$length</span>)</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$string</td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$start</td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$length</td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_strlen" name="method_strlen" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">strlen()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">strlen( <span class="argument">$string</span>)</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$string</td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_str_split" name="method_str_split" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">str_split()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">str_split( <span class="argument">$string</span>,  <span class="argument">$chunk_size</span>)</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$string</td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$chunk_size</td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_pos" name="method_pos" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">pos()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">pos()</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_resource" name="method_is_resource" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_resource()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_resource()</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_close" name="method_close" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">close()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">close()</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/POMO_Reader.html"><div class="path-wrapper">\POMO_Reader</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">streams.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/node_modules/grunt-wp-i18n/vendor/wp-i18n-tools/pomo/streams.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on July 26th, 2014 at 17:13.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

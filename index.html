@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="No Half Pixels Ltd">
+
+    <title>Fluent Docs</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="assets/colorbox/example1/colorbox.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    body{
+      padding-top: 50px;
+      font-family: 'Open Sans', sans-serif;
+      color: #333333;
+      position: relative;
+    }
+    .btn-outline-inverse{
+      color: #333;
+      background-color: transparent;
+      border-color: #333;
+    }
+    .header{
+      padding: 60px 0px;
+      background-image: url('assets/bg.jpg');
+      background-position: bottom center;
+      background-size: cover;
+      background-color: #278ab7;
+      color: #333;
+    }
+    .header h1{
+      font-size: 68px;
+    }
+    .header img{
+    	margin-top: 30px;
+    }
+    .header .text-muted{
+    	margin-bottom: 4px;
+    }
+    .blurb{
+      padding: 40px 0px 60px 0px;
+    }
+    .blurb h1{
+      margin: 40px 0px;
+    }
+    .featurette{
+      background: #f9f9f9;
+      padding: 60px 0px;
+    }
+    .featurette .panel-body{
+      min-height: 230px;
+      transition: all .2s ease-in-out;
+      -ms-transition: all .2s ease-in-out;
+      -webkit-transition: all .2s ease-in-out;
+      cursor: pointer;
+    }
+    .featurette .panel-body:hover{
+      background: #f9f9f9;
+      transform: scale(1.1);
+      -ms-transform: scale(1.1);
+      -webkit-transform: scale(1.1);
+    }
+    .featurette h1{
+      margin-bottom: 40px;
+    }
+    .featurette .fa{
+      font-size: 60px;
+      padding: 10px 0px;
+      color: #999;
+    }
+    .gallery{
+      padding: 60px 0px;
+    }
+    .gallery h1{
+      margin-bottom: 40px;
+    }
+    .newsletter{
+      background: #f9f9f9;
+      padding: 40px 0px 60px 0px;
+    }
+    .newsletter h2{
+      margin: 40px 0px;
+    }
+    .support{
+      padding: 40px 0px 60px 0px;
+    }
+    .support h1{
+      margin: 40px 0px;
+    }
+    footer{
+      padding: 20px 0px;
+    }
+    </style>
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-bold">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="https://no-half-pixels.github.io/Fluent-Demo/" class="navbar-brand">Fluent Docs</a>
+          <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#sec1">About</a></li>
+            <li><a href="#sec2">Features</a></li>
+            <li><a href="#sec3">Gallery</a></li>
+            <li><a href="#sec4">Newsletter</a></li>
+            <li><a href="#sec5">Support</a></li>
+            <li><a href="http://support.nohalfpixels.com/documentation/fluent-docs/">Documentation</a></li>
+            <li><a href="docs">API Docs</a></li>
+          </ul>
+        </div>
+       </div>
+    </div>
+
+    <div class="header vert">
+      <div class="container">
+        <div class="row">
+        	<div class="col-md-7">
+        		<h1>Fluent Docs</h1>
+        		<p class="lead text-muted">1.0.0</p>
+		        <p class="lead">Easy documentation generation for WordPress plugins & themes</p>
+		        <div>&nbsp;</div>
+		        <a href="#" class="btn btn-default btn-outline-inverse btn-lg" id="more-info">More Info</a>
+		        <!--<a href="http://codecanyon.net/item/fluent-framework/8182629?ref=nohalfpixels" class="btn btn-default btn-outline-inverse btn-lg" id="buy-now">Buy Now</a>-->
+          </div>
+          <div class="col-md-5 hidden-xs hidden-sm">
+            <img src="https://d2v9ocgcexcfex.cloudfront.net/screen.png" alt="Fluent Docs" class="img-responsive">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec1" class="blurb">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <p class="lead text-center">Fluent Docs is a documentation generation plugin for WordPress. No longer do you need to generate and compile documentation in web and print form for your themes & plugins. Create your documentation using the WordPress custom post type editor, then let the plugin serve web accessible, print and PDF generated documentation for you.</p>
+
+			<p>Need to provide documentation in the theme/plugin folder? simply download the PDF version from your site and use that.</p>
+			<p>Changed part of your documentation? simply update once online and redownload the PDF to include in your product.</p>
+
+			<p>Fluent Docs makes documentation easy, and provides 3 outlets that the documentation can be viewed. Provide the documentation online, have the option to view a printable version, and have PDFs will fully linked table of contents generated on the fly.</p>
+			<p>Simply use the documentation heirachy through WordPress post attributes to order and compile the table of contents and content.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="featurette" id="sec2">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h1>Amazing Feature Set</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <span class="fa fa-tablet"></span>
+                <h4>Responsive Default Styling</h4>
+                <p class="text-muted">The web version provides a default responsive look and feel that will look great in any template.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <span class="fa fa-print"></span>
+                <h4>Print View</h4>
+                <p class="text-muted">Some users enjoy printing documentation (even though we should be saving the trees). Fluent Docs has that covered</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <span class="fa fa-magic"></span>
+                <h4>PDF Generation</h4>
+                <p class="text-muted">No need to rewrite the same documentation for inclusion with files, and online. PDF's can be generated for you.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <span class="fa fa-twitter"></span>
+                <h4>Bootstrap Intergration</h4>
+                <p class="text-muted">Print and PDF docs are generated with Twitter Bootstrap styling. A nice clean way to supply documentation.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <span class="fa fa-refresh"></span>
+                <h4>Clever</h4>
+                <p class="text-muted">Fluent Docs only generates new PDF's when things change in your docs. If nothings changed it serves a previously generated file.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <span class="fa fa-thumbs-up"></span>
+                <h4>Likes & Dislikes</h4>
+                <p class="text-muted">Need feedback on your content? Fluent Docs has that covered.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="gallery" id="sec3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h1>Gallery</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2 col-xs-4 text-center">
+            <a href="https://d2v9ocgcexcfex.cloudfront.net/screenshots/documentation-options.jpg" class="thumbnail" title="Documentation Options"><img src="https://d2v9ocgcexcfex.cloudfront.net/screenshots/thumbs/documentation-options.jpg" alt="Documentation Options" class="img-responsive"></a>
+          </div>
+          <div class="col-sm-2 col-xs-4 text-center">
+            <a href="https://d2v9ocgcexcfex.cloudfront.net/screenshots/edit-documentation.jpg" class="thumbnail" title="Edit Documentation"><img src="https://d2v9ocgcexcfex.cloudfront.net/screenshots/thumbs/edit-documentation.jpg" alt="Edit Documentation" class="img-responsive"></a>
+          </div>
+          <div class="col-sm-2 col-xs-4 text-center">
+            <a href="https://d2v9ocgcexcfex.cloudfront.net/screenshots/example-custom-css-template.jpg" class="thumbnail" title="Custom Css & Template Intergration"><img src="https://d2v9ocgcexcfex.cloudfront.net/screenshots/thumbs/example-custom-css-template.jpg" alt="Custom Css & Template Intergration" class="img-responsive"></a>
+          </div>
+          <div class="col-sm-2 col-xs-4 text-center">
+            <a href="https://d2v9ocgcexcfex.cloudfront.net/screenshots/example-default-css-theme.jpg" class="thumbnail" title="Default Css & Template Intergration"><img src="https://d2v9ocgcexcfex.cloudfront.net/screenshots/thumbs/example-default-css-theme.jpg" alt="Default Css & Template Intergration" class="img-responsive"></a>
+          </div>
+          <div class="col-sm-2 col-xs-4 text-center">
+            <a href="https://d2v9ocgcexcfex.cloudfront.net/screenshots/example-pdf-view.jpg" class="thumbnail" title="PDF Generation"><img src="https://d2v9ocgcexcfex.cloudfront.net/screenshots/thumbs/example-pdf-view.jpg" alt="PDF Generation" class="img-responsive"></a>
+          </div>
+          <div class="col-sm-2 col-xs-4 text-center">
+            <a href="https://d2v9ocgcexcfex.cloudfront.net/screenshots/example-print-documentation.jpg" class="thumbnail" title="Print Documentation"><img src="https://d2v9ocgcexcfex.cloudfront.net/screenshots/thumbs/example-print-documentation.jpg" alt="Print Documentation" class="img-responsive"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="newsletter" id="sec4">
+      <div class="container text-center">
+        <form action="http://lists.nohalfpixels.com/subscribe" method="POST" accept-charset="utf-8" role="form" id="subscribe-form">
+          <h2>Subscribe to our Newsletter</h2>
+          <div class="alert alert-success text-center alert-dismissible" style="display:none;" role="alert" id="subscribe-alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            Thank you for subscribing!
+          </div>
+          <p class="lead">Want to stay up to date with all our latest news, updates and new features? Subscribe to our newsletter below.</p>
+          <input type="hidden" name="Source" id="Source" value="Github Site Form">
+          <input type="hidden" name="list" id="list-list" value="ApDY7oXljFOTWxqMeQCj8Q">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="form-group">
+                <input type="text" name="name" id="name-list" class="form-control" placeholder="Enter your Name">
+              </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                  <input type="text" name="email" id="email-list" class="form-control" placeholder="Enter your Email Address">
+                </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <input type="submit" name="submit" id="submit" class="btn btn-block btn-primary" value="Subscribe">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="sec5" class="support">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h1>Support</h1>
+            <p>We provide support for the Fluent Demo round the clock.</p>
+            <p>We utilize the Github Issue system for this and all support requests should be directed to the <br/>project issues page here: <a href="https://github.com/No-Half-Pixels/Fluent-Docs/issues" target="_blank" title="Fluent Docs Issues">Fluent Docs Issues</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- FOOTER -->
+      <footer class="container text-center">
+        <p>&copy; 2014 <a href="http://nohalfpixels.com" target="_blank" title="No Half Pixels Ltd">No Half Pixels Ltd</a></p>
+      </footer>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="assets/colorbox/jquery.colorbox-min.js"></script>
+    <script>
+    $(document).ready(function(){
+      var hash = document.URL.substr(document.URL.indexOf('#')+1);
+      if(hash == 'subscribed'){
+        $('#subscribe-alert').fadeIn('slow');
+        $('html,body').animate({
+          scrollTop: $("#subscribe-alert").offset().top
+        });
+      }
+      $('#subscribe-form').submit(function(){
+        if($('#name-list').val() == ''){
+          alert("Please enter your name!");
+          return false;
+        }
+        if($('#email-list').val() == ''){
+          alert("Please enter your email!");
+          return false;
+        }
+        return true;
+      });
+      $('a.thumbnail').colorbox({maxWidth:"60%",rel:"gallery", title: function(){
+        return $(this).attr('title');
+      }});
+      $('#more-info').click(function(){
+        $('html,body').animate({
+          scrollTop: $("#sec2").offset().top
+        });
+        return false;
+      });
+      $('.navbar a').click(function(){
+        $('html,body').animate({
+          scrollTop: $($(this).attr('href')).offset().top
+        });
+
+        return false;
+      });
+      $('body').scrollspy({ target: '.navbar' })
+    });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<?php
+/**
+ * Fluent Docs Base class.fluent-docs-base.php.
+ *
+ * The job of this class is to create the base class which most others will extend.
+ *
+ * @package Fluent Docs
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+/**
+ * Fluent_Docs_Base
+ */
+class Fluent_Docs_Base extends Fluent_Base{
+
+	/**
+     * @var string $domain Class text domain.
+     */
+    public $domain = 'fluent-docs';
+    
+}

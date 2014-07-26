@@ -1,0 +1,51 @@
+<?php
+/*
+Plugin Name: Fluent Docs
+Plugin URI: http://no-half-pixels.github.io/Fluent-Docs/
+Description: Fluent Docs allows you to create product documentation, and auto generates pdf documentation from your content.
+Author: No Half Pixels Ltd
+Version: 1.0.0
+Author URI: http://nohalfpixels.com
+Text Domain: fluent-docs
+*/
+/**
+ * Fluent Docs fluent-docs.php (root file).
+ *
+ * This is the main bootstrap file for the plugin.
+ * Its job is to bootstrap the class files.
+ *
+ * @package Fluent Demo
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+/**
+ * Define fluent demo base path - needed for loading classes.
+ */
+define( 'FLUENT_DOCS_FILE', __FILE__ );
+
+/**
+ * Define path to fluent demo resources. Needed for loading assets.
+ */
+define( 'FLUENT_DOCS_URL', plugins_url( '/', FLUENT_DOCS_FILE ));
+
+//require the fluent framework
+include_once(dirname(FLUENT_DOCS_FILE) . '/includes/fluent-framework/fluent-framework.php');
+Fluent_Base::$url = FLUENT_DOCS_URL . 'includes/fluent-framework/';
+
+//include classes
+include_once(dirname(FLUENT_DOCS_FILE) . '/classes/class.fluent-docs-base.php');
+include_once(dirname(FLUENT_DOCS_FILE) . '/classes/class.fluent-docs-options.php');
+include_once(dirname(FLUENT_DOCS_FILE) . '/classes/class.fluent-docs-post-type.php');
+include_once(dirname(FLUENT_DOCS_FILE) . '/classes/class.fluent-docs-help.php');
+include_once(dirname(FLUENT_DOCS_FILE) . '/classes/class.fluent-docs-shortcodes.php');
+include_once(dirname(FLUENT_DOCS_FILE) . '/classes/class.fluent-docs-likes.php');
+include_once(dirname(FLUENT_DOCS_FILE) . '/classes/class.fluent-docs-print-view.php');
+
+//fire classes
+new Fluent_Docs_Options();
+new Fluent_Docs_Post_Type();
+new Fluent_Docs_Help();
+new Fluent_Docs_Shortcodes();
+new Fluent_Docs_Likes();
+new Fluent_Docs_Print_View();

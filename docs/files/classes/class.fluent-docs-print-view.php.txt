@@ -1,0 +1,58 @@
+<?php
+/**
+ * Fluent Docs Print View class.fluent-docs-print-view.php.
+ *
+ * This class intercepts the page request and outputs either print css output, or a pdf.
+ *
+ * @package Fluent Docs
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+/**
+ * Fluent_Docs_Print_View
+ */
+class Fluent_Docs_Print_View extends Fluent_Docs_Base{
+
+	/**
+   * @var string $version Class version.
+   */
+  public $version = '1.0.0';
+
+  /**
+    * create class instance.
+    *
+    * @since 1.0.0
+    *
+    * @return none
+    *
+    */
+  public function __construct(){
+  	//force all requests to sections and articles to the root parent
+    add_action('template_include', $this->provide('intercept'), 100);
+  }
+
+  /**
+    * Intercept and display the print/pdf template if args are met.
+    *
+    * @since 1.0.0
+    *
+    * @return $template
+    *
+    */
+  public function intercept($template = ''){
+  	global $post;
+    if(!is_object($post) || !is_single($post->ID)){
+      return $template;
+    }
+    if(get_post_type($post->id) != 'documentation'){
+      return $template;
+    }
+    if(isset($_GET['media']) && ($_GET['media'] == 'print' || $_GET['media'] == 'pdf')){
+      if(wp_verify_nonce($_GET['_wpnonce'], 'documentation-actions')){
+    	 return dirname(FLUENT_DOCS_FILE) . '/assets/templates/single-documentation-print-view.php';
+      }
+	 }
+	return $template;
+  }
+}

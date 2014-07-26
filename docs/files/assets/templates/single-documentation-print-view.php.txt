@@ -1,0 +1,125 @@
+<?php
+$opts = get_option('fluent_docs');
+$img = '';
+if(isset($opts['cover-image']) && $opts['cover-image'] != ''){
+	$_img = wp_get_attachment_image_src($opts['cover-image']);
+	$img = $_img[0];
+}
+ob_start();
+?>
+<html>
+	<head>
+		<title><?php the_title();?></title>
+		<?php wp_print_scripts();?>
+		<link rel="stylesheet" href="<?php echo FLUENT_DOCS_URL;?>assets/vendor/bootstrap/css/bootstrap.min.css" media="all"/>
+		<?php wp_print_styles(array('fluent-docs-css'));?>
+	</head>
+	<body class="<?php echo ($_GET['media'] == 'pdf') ? 'print pdf' : 'print';?>">
+		<?php if($img != ''){?>
+		<div class="documentation-print-header">
+			<img src="<?php echo $img;?>"/>
+		</div>
+		<?php }?>
+		<?php if(have_posts()){
+			while(have_posts()){
+				the_post();
+				?>
+				<div id="documentation-<?php the_ID();?>" <?php post_class();?>>
+					<div class="entry-header">
+						<h1 class="entry-title"><?php the_title();?></h1>
+						<h4><?php echo $opts['author'];?></h4>
+					</div>
+					<div class="entry-content">
+						<?php the_content();?>
+					</div>
+				</div>
+				<?php
+			}
+		}?>
+	</body>
+</html>
+<?php
+$html = ob_get_contents();
+ob_end_clean();
+if($_GET['media'] == 'pdf'){
+
+	$latest = get_post_meta(get_the_ID(), 'latest_pdf', true);
+	if($latest != '' && !isset($_GET['force'])){
+		$latest_time = get_post_modified_time( 'U', false, $latest);
+		$time = get_post_modified_time('U', false, get_the_ID());
+		$lastmod = $time;
+		$children = get_children(array(
+	  		'post_parent' => get_the_ID(),
+	  		'post_type' => 'documentation',
+	  		'post_status' => 'publish'
+	  	));
+	  	foreach($children as $child){
+	  		$time = get_post_modified_time('U', false, $child->ID);
+	  		if($time > $lastmod){
+	  			$lastmod = $time;
+	  		}
+			$grandchildren = get_children(array(
+		  		'post_parent' => $child->ID,
+		  		'post_type' => 'documentation',
+		  		'post_status' => 'publish'
+		  	));
+			foreach($grandchildren as $grandchild){
+		  		$time = get_post_modified_time('U', false, $grandchild->ID);
+		  		if($time > $lastmod){
+		  			$lastmod = $time;
+		  		}
+		  	}
+	  	}
+	  	if($lastmod <= $latest_time){
+	  		//fetch generated pdf to save proccessing
+	  		wp_redirect(wp_get_attachment_url($latest));
+	  		exit;
+	  	}
+	}
+
+	//now we need to generate a pdf
+	$up = wp_upload_dir();
+	define("_MPDF_TEMP_PATH", $up['basedir']);
+	define("_MPDF_TTFONTDATAPATH", $up['basedir']);
+	include(dirname(FLUENT_DOCS_FILE) . '/includes/mpdf/mpdf.php');
+	$mpdf=new mPDF('c');
+	$mpdf->SetTitle(get_the_title());
+	$mpdf->SetAuthor($opts['author']);
+	$mpdf->SetSubject(__('Documentation', 'fluent-docs'));
+	$mpdf->SetCreator('Fluent Docs | No Half Pixels Ltd');
+	$mpdf->simpleTables = true;
+	$mpdf->WriteHTML($html);
+	$name = strtolower(sanitize_file_name(get_the_title())).'.pdf';
+	$pdf = $mpdf->Output($name, 'S');
+	$upload = wp_upload_bits( $name, null, $pdf );
+
+	if($upload['error'] != ''){
+		//lets send the output, not great for memory but hey we cant save it anyway
+		$mpdf->Output($name, 'D');
+		exit;
+	}
+	//insert to media library
+	$filetype = wp_check_filetype( basename( $upload['file'] ), null );
+	$attachment = array(
+		'guid'           => $upload['url'], 
+		'post_mime_type' => $filetype['type'],
+		'post_title'     => $name,
+		'post_content'   => '',
+		'post_status'    => 'inherit'
+	);
+	$attach_id = wp_insert_attachment( $attachment, $upload['file'] );
+	//update the main docs post so it knows a pdf has been generated
+	update_post_meta(get_the_ID(), 'latest_pdf', $attach_id);
+	//update the list of pdfs generated for this documentation - this in future will allow the user to deleet old ones from the docs page.
+	$ids = get_post_meta(get_the_ID(), 'all_pdfs', true);
+	if(!$ids || !is_array($ids)){
+		$ids = array();
+	}
+	$ids[] = $attach_id;
+	update_post_meta(get_the_ID(), 'all_pdfs', $ids);
+	//finally send the file
+	$mpdf->Output($name, 'D');
+	exit;
+}else{
+	echo $html;
+}
