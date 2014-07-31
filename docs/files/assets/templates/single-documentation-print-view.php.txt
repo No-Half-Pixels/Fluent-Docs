@@ -88,6 +88,8 @@ if($_GET['media'] == 'pdf'){
 	$mpdf->SetSubject(__('Documentation', 'fluent-docs'));
 	$mpdf->SetCreator('Fluent Docs | No Half Pixels Ltd');
 	$mpdf->simpleTables = true;
+	//add custom page breaks
+	$html = preg_replace('~<span([^>]*)id="more-(.*?)"></span>~im', '<!--mpdf <pagebreak /> mpdf-->', $html);
 	$mpdf->WriteHTML($html);
 	$name = strtolower(sanitize_file_name(get_the_title())).'.pdf';
 	$pdf = $mpdf->Output($name, 'S');
@@ -121,5 +123,6 @@ if($_GET['media'] == 'pdf'){
 	$mpdf->Output($name, 'D');
 	exit;
 }else{
+	$html = preg_replace('~<span([^>]*)id="more-(.*?)"></span>~im', '<div class="pagebreak"></div>', $html);
 	echo $html;
 }

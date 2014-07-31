@@ -4,7 +4,7 @@
  *
  * @package Fluent
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 
 /**
@@ -15,7 +15,7 @@ class Fluent_Options_Page extends Fluent_Options{
     /**
      * @var string $version Class version.
      */
-    public $version = '1.0.1';
+    public $version = '1.0.2';
     
     /**
      * @var $page Fluent_Page instance. If supplied the Options class should be used in page context and we use this to register the output we need on the page.
@@ -59,8 +59,12 @@ class Fluent_Options_Page extends Fluent_Options{
     
         add_action('fluent/page/'.$this->page->args['slug'].'/load', $this->provide('load_page'));
         add_action('fluent/page/'.$this->page->args['slug'].'/render', $this->provide('render_page'));
-        
-        add_filter( 'option_' . $this->args['option_name'], $this->provide( 'format_option' ) );
+
+        if(isset($this->args['page_args']['network']) && $this->args['page_args']['network'] == true){
+            add_filter( 'site_option_' . $this->args['option_name'], $this->provide( 'format_option' ) );
+        }else{
+            add_filter( 'option_' . $this->args['option_name'], $this->provide( 'format_option' ) );
+        }
             
     }
 

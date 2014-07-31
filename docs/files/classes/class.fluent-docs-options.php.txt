@@ -33,6 +33,15 @@ class Fluent_Docs_Options extends Fluent_Docs_Base{
     *
     */
   public function __construct(){
+
+  		$support = new Fluent_Support(array(
+		    'id' => 'fluent-docs-support',//must be unique, best to be the plugin/theme name from which you are using it. This is required.
+		    'email' => 'contact@nohalfpixels.com',//where to send the messages. This is required
+		));
+		//we need to store this so we can use it later on, make sure you use unique keys here too.
+		Fluent_Store::set('fluent-docs-support', $support);
+
+
   		$this->page = new Fluent_Options_Page(
   			array(
   				'option_name' => 'fluent_docs',
@@ -322,11 +331,31 @@ class Fluent_Docs_Options extends Fluent_Docs_Base{
   					'description' => __('Please add any custom Css rules you would like loaded on the documentation page.', $this->domain),
   					'fields' => array(
   						'css' => array(
-				            'type' => 'textarea',
+				            'type' => 'ace',
 				            'title' => __('Custom Css', $this->domain),
 				            'description' => __('Enter any custom Css you want to add to the documentation.<br/>Please view the page source to view available classes and ids', $this->domain)
 				        ),
   					),
+  				),
+  				'support' => array(
+  					'title' => __('Get Support', $this->domain),
+  					'dash_icon' => 'tag',
+  					'description' => __('', $this->domain),
+  					'fields' => array(
+  						'support-form' => array(
+				            'type' => 'custom',
+				            'title' => __('Support Request', 'fluent'),
+				            'sub_title' => __('', 'fluent'),
+				            'description' => __('If you are having any issues with the Fluent Docs plugin please let us know by filling in the form.', 'fluent'),
+				            'callbacks' => array(
+				                'render' => function($data, $object){
+				                    //fetch the support form and display it
+				                    $support = Fluent_Store::get('fluent-docs-support');
+				                    $support->the_form();
+				                },
+				            ),
+				        ),
+  					)
   				),
   			)
   		);

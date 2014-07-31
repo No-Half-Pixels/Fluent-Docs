@@ -48,7 +48,7 @@ class Fluent_Docs_Print_View extends Fluent_Docs_Base{
     if(get_post_type($post->id) != 'documentation'){
       return $template;
     }
-    if(isset($_GET['media']) && ($_GET['media'] == 'print' || $_GET['media'] == 'pdf')){
+    if(isset($_GET['media']) && ($_GET['media'] == 'print' || $_GET['media'] == 'pdf') && isset($_GET['_wpnonce'])){
       if(wp_verify_nonce($_GET['_wpnonce'], 'documentation-actions')){
     	 return dirname(FLUENT_DOCS_FILE) . '/assets/templates/single-documentation-print-view.php';
       }

@@ -2,9 +2,9 @@
 /*
 Plugin Name: Fluent Docs
 Plugin URI: http://no-half-pixels.github.io/Fluent-Docs/
-Description: Fluent Docs allows you to create product documentation, and auto generates pdf documentation from your content.
+Description: Easy documentation generation for WordPress plugins & themes.
 Author: No Half Pixels Ltd
-Version: 1.0.0
+Version: 1.0.1
 Author URI: http://nohalfpixels.com
 Text Domain: fluent-docs
 */

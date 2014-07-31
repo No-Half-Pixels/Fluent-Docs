@@ -40,7 +40,7 @@ class Fluent_Post_Type extends Fluent_Base{
     /**
      * @var string $post_type. The post type name.
      */
-    public static $post_type = '';
+    public $post_type = '';
     
     /**
      * @var array $args Class args to be run attached after <code>parse_args</code>.

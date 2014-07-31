@@ -41,6 +41,7 @@ class Fluent_Docs_Shortcodes extends Fluent_Docs_Base{
   	add_shortcode('documentation_content', $this->provide('content'));
     add_shortcode('documentation_online', $this->provide('online'));
     add_shortcode('documentation_offline', $this->provide('offline'));
+    add_shortcode('documentation_pagebreak', $this->provide('page_break'));
   }
 
   /**
@@ -197,38 +198,70 @@ class Fluent_Docs_Shortcodes extends Fluent_Docs_Base{
     $output = '<!--mpdf <tocpagebreak links="on" toc-bookmarkText="'.__('Table Of Contents'. $this->domain).'"/> mpdf-->';
     $output .= '<!--mpdf <pagefooter name="footer" content-left="'.get_the_title($post->ID).'" content-center="" content-right="{PAGENO}" line="on"/><setpagefooter name="footer" value="on" /> mpdf-->';
     	$output .= '<div class="documentation-contents-wrapper"'.((isset($_GET['media']) && $_GET['media'] == 'pdf') ? ' style="display: none;"' : '').'>';
-	  	$output .= '<ul class="documentation-contents-sections">';
-	  	$key = 1;
-	  	foreach($sections as $section){
-	  		$link = ($atts['remote']) ? get_permalink($atts['id']) : '';
-	  		$link .= '#section-'.$section->ID;
-	  		$output .= '<li class="section"><a href="'.$link.'">'.str_pad($key, 2, '0', STR_PAD_LEFT).' '.get_the_title($section->ID).'</a>';
-	  			$output .= '<ul class="documentation-contents-section-articles">';
-	  			$subkey = 1;
-	  			$articles = get_children(array(
-			  		'post_parent' => $section->ID,
-			  		'post_type' => 'documentation',
-			  		'post_status' => 'publish',
-            'orderby' => 'menu_order',
-            'order'  => 'ASC',
-			  	));
-	  			foreach($articles as $article){
-	  				$link = ($atts['remote']) ? get_permalink($atts['id']) : '';
-	  				$link .= '#article-'.$article->ID;
-	  				$output .= '<li class="article"><a href="'.$link.'">'.str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey.' '.get_the_title($article->ID).'</a></li>';
-	  				$subkey++;
-	  			}
-	  			$output .= '</ul>';
-	  		$output .= '</li>';
-	  		$key++;
-	  	}
-	  	$output .= '</ul>';
-      if(!isset($_GET['media'])){
-        $output .= '<div class="documentation-actions"><a href="'.wp_nonce_url(add_query_arg(array('media' => 'print'), get_permalink($atts['id'])), 'documentation-actions').'" title="'.__('Print Documentation', $this->domain).'"><span class="dashicons dashicons-media-text"></span> '.__('Print Documentation', $this->domain).'</a><br/><a href="'.wp_nonce_url(add_query_arg(array('media' => 'pdf'), get_permalink($atts['id'])), 'documentation-actions').'" title="'.__('Download Pdf', $this->domain).'"><span class="dashicons dashicons-download"></span> '.__('Download Pdf', $this->domain).'</a></div>';
-      }
+    	  $output .= '<div class="documentation-contents-scroll-wrapper">';
+          $output .= '<ul class="documentation-contents-sections">';
+    	  	$key = 1;
+    	  	foreach($sections as $section){
+    	  		$link = ($atts['remote']) ? get_permalink($atts['id']) : '';
+    	  		$link .= '#section-'.$section->ID;
+    	  		$output .= '<li class="section"><a href="'.$link.'">'.str_pad($key, 2, '0', STR_PAD_LEFT).' '.get_the_title($section->ID).'</a>';
+    	  			$output .= '<ul class="documentation-contents-section-articles">';
+    	  			$subkey = 1;
+    	  			$articles = get_children(array(
+    			  		'post_parent' => $section->ID,
+    			  		'post_type' => 'documentation',
+    			  		'post_status' => 'publish',
+                'orderby' => 'menu_order',
+                'order'  => 'ASC',
+    			  	));
+    	  			foreach($articles as $article){
+    	  				$link = ($atts['remote']) ? get_permalink($atts['id']) : '';
+    	  				$link .= '#article-'.$article->ID;
+    	  				$output .= '<li class="article"><a href="'.$link.'">'.str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey.' '.get_the_title($article->ID).'</a>';
+                $link = ($atts['remote']) ? get_permalink($atts['id']) : '';
+                $output .= $this->sub_articles_contents($link, str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey, $article);
+                $output .= '</li>';
+    	  				$subkey++;
+    	  			}
+    	  			$output .= '</ul>';
+    	  		$output .= '</li>';
+    	  		$key++;
+    	  	}
+    	  	$output .= '</ul>';
+          if(!isset($_GET['media'])){
+            $output .= '<div class="documentation-actions"><a href="'.wp_nonce_url(add_query_arg(array('media' => 'print'), get_permalink($atts['id'])), 'documentation-actions').'" title="'.__('Print Documentation', $this->domain).'"><span class="dashicons dashicons-media-text"></span> '.__('Print Documentation', $this->domain).'</a><br/><a href="'.wp_nonce_url(add_query_arg(array('media' => 'pdf'), get_permalink($atts['id'])), 'documentation-actions').'" title="'.__('Download Pdf', $this->domain).'"><span class="dashicons dashicons-download"></span> '.__('Download Pdf', $this->domain).'</a></div>';
+          }
+      $output .= '</div>';
   	$output .= '</div>';
 
   	return $output;
+  }
+
+  private function sub_articles_contents($mainlink, $key, $article = false){
+    if($article == false){
+      return '';
+    }
+    $output = '<ul class="documentation-contents-section-articles">';
+    $subkey = 1;
+    $articles = get_children(array(
+      'post_parent' => $article->ID,
+      'post_type' => 'documentation',
+      'post_status' => 'publish',
+      'orderby' => 'menu_order',
+      'order'  => 'ASC',
+    ));
+    if(empty($articles)){
+      return '';
+    }
+    foreach($articles as $article){
+      $link = $mainlink.'#article-'.$article->ID;
+      $output .= '<li class="article"><a href="'.$link.'">'.str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey.' '.get_the_title($article->ID).'</a>';
+      $output .= $this->sub_articles_contents($mainlink, str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey, $article);
+      $output .= '</li>';
+      $subkey++;
+    }
+    $output .= '</ul>';
+    return $output;
   }
 
   /**
@@ -285,7 +318,8 @@ class Fluent_Docs_Shortcodes extends Fluent_Docs_Base{
             setup_postdata($post);
 	  				$link = 'article-'.$article->ID;
 	  				$output .= '<div id="'.$link.'"><h3><a href="'.$mainlink.'#'.$link.'" class="article-number" title="'.__('Link to article', $this->domain).'">'.str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey.'</a> '.get_the_title($article->ID).' <a href="#" title="'.__('To Top', $this->domain).'" class="top"><span class="dashicons dashicons-arrow-up-alt2"></span></a><!--mpdf <tocentry content="'.htmlspecialchars(str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey.' '.get_the_title($article->ID), ENT_QUOTES).'" level="1" /> mpdf--></h3><hr/>'.apply_filters('the_content', get_the_content()).'</div>';
-	  				$subkey++;
+	  				$output .= $this->sub_articles($mainlink, str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey, $article);
+            $subkey++;
 	  			}
 	  			$output .= '</div>';
 	  		$output .= '</div>';
@@ -296,6 +330,34 @@ class Fluent_Docs_Shortcodes extends Fluent_Docs_Base{
   	$output .= '</div>';
     wp_reset_postdata();
   	return $output;
+  }
+
+  private function sub_articles($mainlink, $key, $parent = false, $level = 2){
+    if($parent == false){
+      return '';
+    }
+    $output = '';
+    $subkey = 1;
+    $articles = get_children(array(
+      'post_parent' => $parent->ID,
+      'post_type' => 'documentation',
+      'post_status' => 'publish',
+      'orderby' => 'menu_order',
+      'order'  => 'ASC',
+    ));
+    if(empty($articles)){
+      return '';
+    }
+    foreach($articles as $article){
+      $post = $article;
+      setup_postdata($post);
+      $link = 'article-'.$article->ID;
+      $output .= '<div id="'.$link.'"><h3><a href="'.$mainlink.'#'.$link.'" class="article-number" title="'.__('Link to article', $this->domain).'">'.str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey.'</a> '.get_the_title($article->ID).' <a href="#" title="'.__('To Top', $this->domain).'" class="top"><span class="dashicons dashicons-arrow-up-alt2"></span></a><!--mpdf <tocentry content="'.htmlspecialchars(str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey.' '.get_the_title($article->ID), ENT_QUOTES).'" level="'.$level.'" /> mpdf--></h3><hr/>'.apply_filters('the_content', get_the_content()).'</div>';
+      $output .= $this->sub_articles($mainlink, str_pad($key, 2, '0', STR_PAD_LEFT).'.'.$subkey, $article, $level + 1);
+      $subkey++;
+    }
+    wp_reset_postdata();
+    return $output;
   }
 
   /**
@@ -328,6 +390,10 @@ class Fluent_Docs_Shortcodes extends Fluent_Docs_Base{
     }else{
       return do_shortcode($content);
     }
+  }
+
+  public function page_break($atts = array(), $content = ''){
+    return '<!--mpdf <pagebreak /> mpdf-->';
   }
 
 }
